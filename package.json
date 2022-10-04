@@ -1,28 +1,21 @@
 {
-    "name": "employee-tracker",
-    "version": "1.0.0",
-    "description": "Command line app using node.js, Inquirer, and mysql.",
-    "main": "server.js",
-    "scripts": {
-        "test": "jest",
-        "start": "node server.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/kolbykimball/Employee-Tracker.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/kolbykimball/Employee-Tracker/issues"
-    },
-    "homepage": "https://github.com/kolbykimball/Employee-Tracker",
+ 
     "dependencies": {
-        "console-table": "^0.1.2",
-        "console.table": "^0.10.0",
-        "express": "^4.18.1",
-        "inquirer": "^8.2.4",
-        "mysql2": "^2.3.3"
+ 
+     
+    "console.table": "^0.10.0",
+ 
+     
+    "express": "^4.18.1",
+ 
+     
+    "inquirer": "^8.2.4",
+ 
+     
+    "mysql": "^2.18.1",
+ 
+     
+    "mysql2": "^2.3.3"
+ 
     }
 }

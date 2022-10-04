@@ -1,8 +1,7 @@
-const mysql = require('mysql12');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 
-require('dotenv').config();
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -11,9 +10,11 @@ const connection = mysql.createConnection({
     database: 'employees_db'
 })
 
-connection.connect(err => {
-    if (err) throw err;
-})
+connection.connect(function(err) {
+    if (err) throw err
+    console.log("Connected as Id" + connection.threadId)
+    startPrompt();
+});
 
 const startPrompt = () => {
     inquirer.prompt([
@@ -42,13 +43,13 @@ const startPrompt = () => {
             if (choices === 'View All Departments') {
                 viewAllDepartments();
             }
+            
+            if (choices === 'View All Roles') {
+                viewAllRoles();
+            }
 
             if (choices === 'Add Employee') {
                 addEmployee();
-            }
-
-            if (choices === 'View All Roles') {
-                viewAllRoles();
             }
 
             if (choices === 'Add Role') {
@@ -64,39 +65,41 @@ const startPrompt = () => {
             }
         });
 };
-
-viewDepartments = () => {
-    console.log('Showing all departments.../n');
-    const sql = 'SELECT department.id AS id, department.name AS department FROM department';
-
-    connection.query(sql, (err, rows) => {
-        if (err) throw err;
-        console.table(rows);
-        mainMenu();
-    });
-};
-
-viewRoles = () => {
-    console.log('Showing all roles.../n');
-    const sql = 'SELECT role.id, role.title, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id';
-
-    connection.query(sql, (err, rows) => {
-        if (err) throw err;
-        console.table(rows);
-        mainMenu();
-    });
-};
-
-viewEmployees = () => {
+viewAllEmployees = () => {
     console.log('Showing all employees.../n');
     const sql = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id';
 
     connection.query(sql, (err, rows) => {
         if (err) throw err;
         console.table(rows);
-        mainMenu();
+        startPrompt();
     });
 };
+
+viewAllRoles = () => {
+    console.log('Showing all roles.../n');
+    const sql = 'SELECT role.id, role.title, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id';
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+        console.table(rows);
+        startPrompt();
+    });
+};
+
+viewAllDepartments = () => {
+    console.log('Showing all departments.../n');
+    const sql = 'SELECT department.id AS id, department.name AS department FROM department';
+
+    connection.query(sql, (err, rows) => {
+        if (err) throw err;
+        console.table(rows);
+        startPrompt();
+    });
+};
+
+
+
 
 addEmployee = () => {
     connection.query('SELECT * FROM role', function (err, res) {
@@ -149,7 +152,7 @@ addEmployee = () => {
                     function (err) {
                         if (err) throw err;
                         console.log('Employee has been added!');
-                        mainMenu();
+                        startPrompt();
                     })
             })
     })
@@ -174,7 +177,7 @@ addEmployee = () => {
                 if(err)throw err;
                 console.log('Department has been added!');
                 console.table('All Departments:', res);
-                mainMenu();
+                startPrompt();
                 })
             })
 };
@@ -226,7 +229,7 @@ addRole = () => {
                     connection.query(query, function(err, res) {
                     if(err)throw err;
                     console.table('All Roles:', res);
-                    mainMenu();
+                    startPrompt();
                     })
                   
                 })
