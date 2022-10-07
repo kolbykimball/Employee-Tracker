@@ -43,7 +43,7 @@ const startPrompt = () => {
             if (choices === 'View All Departments') {
                 viewAllDepartments();
             }
-            
+
             if (choices === 'View All Roles') {
                 viewAllRoles();
             }
