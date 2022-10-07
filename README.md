@@ -26,3 +26,5 @@ https://github.com/kolbykimball/Employee-Tracker
 Kolby Kimball 
 
 ## Video 
+
+https://drive.google.com/file/d/1iys5CJDiNyH9-Fb_rw1fQOoZ8B14a4yA/view
